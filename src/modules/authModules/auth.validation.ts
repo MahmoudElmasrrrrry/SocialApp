@@ -1,10 +1,14 @@
 import z, { custom } from 'zod';
 
 export const SignupSchema = z.object({
+    firstName: z.string(),
+    lastName: z.string(),
     email: z.email(),
-    name: z.string(),
     password: z.string().min(6),
     confirmPassword: z.string(),
+    age: z.number().optional(),
+    phoneNumber: z.string().optional()
+
 }).superRefine((obj, ctx)=>{
     if(obj.password !== obj.confirmPassword){
         ctx.addIssue({
@@ -35,3 +39,18 @@ export const SignupSchema = z.object({
 //     error: "Email must start with 'user@'",
 //     path: ["name"]
 // });
+
+
+export const ConfirmEmailSchema = z.object({
+    email: z.email(),
+    otp: z.string().length(6)
+});
+
+export const ResendOTPSchema = z.object({
+    email: z.email()
+});
+
+export const LoginSchema = z.object({
+    email: z.email(),
+    password: z.string().min(6)
+});

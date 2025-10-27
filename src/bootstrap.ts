@@ -6,6 +6,8 @@ import express, {
 import router from "./modules/routes";
 import { IError } from "./utils/errors/types";
 import connectDB from "./DB/config/connectDB";
+import { sendEmail } from "./utils/email/sendEmail";
+import { EMAIL_EVENTS_Enum, emailEvent } from "./utils/email/email.events";
 const app = express();
 
 const bootstrap = async () => {
@@ -21,6 +23,9 @@ const bootstrap = async () => {
       status: err.statusCode || 500,
     });
   });
+
+  
+
 
   app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
