@@ -34,3 +34,18 @@ emailEvent.subscribe(
     await sendEmail({ to, subject, html });
   }
 );
+
+emailEvent.subscribe(
+  EMAIL_EVENTS_Enum.RESET_PASSWORD,
+  async ({
+    to,
+    subject,
+    html,
+  }: {
+    to: string;
+    subject: string;
+    html: string;
+  }) => {
+    await sendEmail({ to, subject, html });
+  }
+);

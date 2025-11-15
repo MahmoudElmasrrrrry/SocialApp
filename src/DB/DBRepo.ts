@@ -30,6 +30,17 @@ export abstract class DBRepo<T> {
         return doc;
     }
 
+    findOneAndUpdate = async(
+    { filter = {}, update, options = {} } :
+    { filter ?: RootFilterQuery<T>, update: ProjectionFields<T>, options ?: QueryOptions<T> }
+    ) => {
+        const doc = await this.model.findOneAndUpdate(filter, update, options);
+        return doc;
+    }   
+
+   
+    
+
     create = async ({data}: {data: Partial<T>}) => {
         const doc = await this.model.create(data);
         return doc;

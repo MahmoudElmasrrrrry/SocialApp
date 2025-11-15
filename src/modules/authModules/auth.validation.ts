@@ -18,13 +18,13 @@ export const SignupSchema = z.object({
         });
     }
 
-    if(!obj.email.startsWith("mahmoud")){
-        ctx.addIssue({
-            code: "custom",
-            message: "Email must start with 'mahmoud'",
-            path: ["email"]
-        });
-    }
+    // if(!obj.email.startsWith("mahmoud")){
+    //     ctx.addIssue({
+    //         code: "custom",
+    //         message: "Email must start with 'mahmoud'",
+    //         path: ["email"]
+    //     });
+    // }
 });
 
 // }).refine((args)=>{

@@ -1,4 +1,4 @@
-import { model, models, Schema } from "mongoose";
+import { model, models, Schema, Types } from "mongoose";
 import { IUser } from "../../modules/userModules/user.types";
 
 const userSchema = new Schema<IUser>(
@@ -15,6 +15,15 @@ const userSchema = new Schema<IUser>(
     emailOTP: {
       otp: String,
       expireTime: Date,
+    },
+    resetPasswordOTP: {
+      otp: String,
+      expireTime: Date,
+    },
+    friends:{
+      type: [Types.ObjectId],
+      ref: "users",
+      default: []
     },
   },
   {

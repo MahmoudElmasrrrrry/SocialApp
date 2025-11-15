@@ -8,10 +8,13 @@ import { IError } from "./utils/errors/types";
 import connectDB from "./DB/config/connectDB";
 import { sendEmail } from "./utils/email/sendEmail";
 import { EMAIL_EVENTS_Enum, emailEvent } from "./utils/email/email.events";
+import { initlazyGetway } from "./modules/gatway/gatway";
+import cors from "cors";
 const app = express();
 
 const bootstrap = async () => {
   const port = process.env.PORT || 5000;
+  app.use(cors());
   app.use(express.json());
   app.use("/api/v1", router);
   await connectDB();
@@ -24,12 +27,11 @@ const bootstrap = async () => {
     });
   });
 
-  
-
-
-  app.listen(port, () => {
+  const server = app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
   });
+
+  initlazyGetway(server);
 };
 
 export default bootstrap;

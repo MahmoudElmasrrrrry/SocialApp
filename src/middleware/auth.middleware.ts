@@ -10,11 +10,11 @@ export enum TOKEN_TYPE_Enum {
 }
 const userModel = new UserRepo();
 export const decodeToken = async ({
-  authorization,
+  authorization = "",
   tokenType = TOKEN_TYPE_Enum.ACCESS,
 }: {
-  authorization: string;
-  tokenType: TOKEN_TYPE_Enum;
+  authorization ?: string;
+  tokenType ?: TOKEN_TYPE_Enum;
 }) => {
   if (!authorization) {
     throw new InvalidTokenException();

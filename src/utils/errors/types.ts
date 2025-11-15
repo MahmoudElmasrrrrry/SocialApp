@@ -39,3 +39,9 @@ export class InvalidTokenException extends ApplicationError {
         super(msg, 401);
     }   
 }
+
+export class NotVerifiedException extends ApplicationError {
+    constructor(msg: string = "User Not Verified") {
+        super(msg, 403);
+    }
+}
