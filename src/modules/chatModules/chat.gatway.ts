@@ -7,5 +7,7 @@ export class ChatGateway{
     private readonly chatEvents = new ChatEvents();
     register(socket: AuthSocket){
         this.chatEvents.sendMessage(socket);
+        this.chatEvents.joinRoom(socket);
+        this.chatEvents.sendGroupMessage(socket);
     }
 }

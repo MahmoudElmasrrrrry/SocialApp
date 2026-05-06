@@ -8,6 +8,7 @@ const router = Router(
 );
 const chatService = new ChatService()
 
-router.get('/', auth, chatService.getChat)
-
+router.get('/', auth, chatService.getChat);
+router.post('/create-group', auth, chatService.createGroupChat);
+router.get('/get-group-chat/:groupId', auth, chatService.getGroupChats);
 export default router

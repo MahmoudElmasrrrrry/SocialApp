@@ -22,9 +22,11 @@ import { compare, hash } from "bcrypt";
 import { generateToken } from "../../utils/security/token";
 import { decodeToken, TOKEN_TYPE_Enum } from "../../middleware/auth.middleware";
 import { FriendRequestRepo } from "../../DB/repos/friendRequest.repo";
+import { ChatRepo } from "../../DB/repos/chat.repo";
 
 export class AuthServices {
   private userModel = new UserRepo();
+  private chatModel = new ChatRepo(); 
   private friendModel = new FriendRequestRepo();
   signup = async (
     req: Request,
@@ -223,9 +225,19 @@ export class AuthServices {
   ): Promise<Response> => {
     let user: HUserDocument = res.locals.user;
     user = await user.populate('friends');
+
+    const groups = await this.chatModel.find({
+      filter:{
+        participants:{
+          $in:[user._id]
+        },
+        group:{ $exists: true }
+      }
+    });
+
     return successHandler({
       res,
-      data: user,
+      data: { user, groups },
       message: "User profile fetched successfully",
     });
   };

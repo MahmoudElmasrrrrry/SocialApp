@@ -30,13 +30,24 @@ export const initlazyGetway = async (httpServer: HttpServer) => {
         }
     });
 
-    io.on("connection", (socket:AuthSocket) => {
+    const connect = (socket: AuthSocket)=>{
         const currentSocket = connectedSockets.get(socket.user?._id.toString() as string) || []
         currentSocket.push(socket.id)
         connectedSockets.set(socket.user?._id.toString()as string, currentSocket);
-        console.log({connectedSockets});
-        
+    }
+
+    const disconnect = (socket: AuthSocket)=>{
+        socket.on('disconnect', ()=>{
+        const currentSocket = connectedSockets.get(socket.user?._id.toString() as string) || []
+        const filteredSockets = currentSocket.filter(id => id !== socket.id);
+        connectedSockets.set(socket.user?._id.toString()as string, filteredSockets);
+        });
+    }
+
+    io.on("connection", (socket:AuthSocket) => {
         registerGateWay.register(socket);
+        connect(socket);
+        disconnect(socket);
     });
 
 }
